@@ -1,0 +1,43 @@
+version: 2.1
+orbs:
+  gcr: circleci/gcp-gcr@0.6.1
+  gcloud: circleci/gcp-cli@1.8.3
+  k8s: circleci/kubernetes@0.9.1
+
+jobs:
+  build-push-and-rollout:
+    machine: true
+    steps:
+      - checkout
+      - gcr/gcr-auth
+      - gcr/build-image:
+          image: fishapp_client_nginx
+          dockerfile: nginx/Dockerfile
+          path: nginx/
+          tag: ${CIRCLE_SHA1}
+          registry-url: asia.gcr.io
+      - gcr/build-image:
+          image: fishapp_client_nuxt
+          tag: ${CIRCLE_SHA1}
+          registry-url: asia.gcr.io
+          extra_build_args: --build-arg DOMAIN_NAME=${DOMAIN_NAME} --build-arg EXP_SEC=${EXP_SEC} --build-arg RT_EXP_SEC=${RT_EXP_SEC}
+      - gcr/push-image:
+          image: fishapp_client_nginx
+          tag: ${CIRCLE_SHA1}
+          registry-url: asia.gcr.io
+      - gcr/push-image:
+          image: fishapp_client_nuxt
+          tag: ${CIRCLE_SHA1}
+          registry-url: asia.gcr.io
+      - k8s/install-kubectl
+      - run:
+          command: |
+            gcloud container clusters get-credentials fishapp
+            kubectl set image deployment client-deployment nuxt=asia.gcr.io/${GOOGLE_PROJECT_ID}/fishapp_client_nuxt:${CIRCLE_SHA1}
+            kubectl set image deployment client-deployment nginx=asia.gcr.io/${GOOGLE_PROJECT_ID}/fishapp_client_nginx:${CIRCLE_SHA1}
+
+
+workflows:
+  build-push-and-rollout:
+    jobs:
+      - build-push-and-rollout
