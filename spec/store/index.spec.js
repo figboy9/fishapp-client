@@ -1,16 +1,16 @@
 import Vuex from 'vuex'
 import { createLocalVue } from '@vue/test-utils'
 import cloneDeep from 'lodash.clonedeep'
-import index from '../../store'
+import user from '../../store/user'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
 
-describe('store/index.js', () => {
+describe('store/user.js', () => {
   let store
 
   beforeEach(() => {
-    store = new Vuex.Store(cloneDeep(index))
+    store = new Vuex.Store(cloneDeep(user))
   })
 
   describe('mutations', () => {
