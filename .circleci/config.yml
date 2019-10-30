@@ -61,7 +61,7 @@ workflows:
       - test
       - build-push-and-rollout:
           requires:
-            - lint-test
+            - test
           filters:
             branches:
               only:
