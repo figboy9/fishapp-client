@@ -57,7 +57,7 @@ const actions = {
     commit('setIsLoggedIn', true)
   },
 
-  async refreshIdToken(a, refreshToken) {
+  async refreshIdToken(_, refreshToken) {
     this.$axios.setToken(refreshToken, 'Bearer')
     const authData = await this.$axios.$post('auth/refresh_id_token')
     return authData

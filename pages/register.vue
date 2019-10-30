@@ -72,7 +72,7 @@ export default {
         return
       }
       this.$store
-        .dispatch('user/register', {
+        .dispatch('register', {
           name: this.name,
           email: this.email,
           password: this.password
@@ -91,7 +91,7 @@ export default {
         })
     },
     logout() {
-      this.$store.dispatch('user/logout')
+      this.$store.dispatch('logout')
     }
   }
 }
