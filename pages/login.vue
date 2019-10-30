@@ -2,7 +2,6 @@
   <v-form ref="form" v-model="valid">
     <nuxt-link to="/secret">a</nuxt-link>
     <p>{{ this.$store.getters.isLoggedIn }}</p>
-    <p>{{ validPass }}</p>
     <v-container class="px-10 text-center">
       <h1>ログイン</h1>
       <v-row>
@@ -64,7 +63,7 @@ export default {
         return
       }
       this.$store
-        .dispatch('user/login', {
+        .dispatch('login', {
           email: this.email,
           password: this.password
         })
