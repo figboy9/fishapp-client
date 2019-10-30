@@ -5,23 +5,23 @@ orbs:
   k8s: circleci/kubernetes@0.9.1
 
 jobs:
-  lint-test:
+  test:
     docker:
       - image: circleci/node:12.13.0
     steps:
       - checkout
       - restore_cache:
           keys:
-          # lock ファイルが変更されると、より広範囲にマッチする 2 番目以降のパターンがキャッシュの復元に使われます
             - node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
             - node-v1-{{ .Branch }}-
             - node-v1-
       - run: yarn
       - save_cache:
           paths:
-            - node_modules  # location depends on npm version
+            - node_modules
           key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: yarn lint
+      - run: yarn test
 
   build-push-and-rollout:
     machine: true
@@ -58,7 +58,7 @@ jobs:
 workflows:
   build-push-and-rollout:
     jobs:
-      - lint-test
+      - test
       - build-push-and-rollout:
           requires:
             - lint-test
