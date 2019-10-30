@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-import webpack from 'webpack'
 
 export default {
   mode: 'universal',

@@ -1,9 +1,9 @@
-export const state = () => ({
+const state = () => ({
   isLoggedIn: false,
   user: null
 })
 
-export const mutations = {
+const mutations = {
   setUser(state, user) {
     state.user = user
   },
@@ -12,11 +12,11 @@ export const mutations = {
   }
 }
 
-export const getters = {
+const getters = {
   isLoggedIn: (state) => state.isLoggedIn
 }
 
-export const actions = {
+const actions = {
   async nuxtServerInit({ commit }, { $axios, req, res }) {
     console.log('EXP_SEC: ', process.env.expSec)
     console.log('RT_EXP_SEC: ', process.env.rtExpSec)
@@ -121,4 +121,11 @@ export const actions = {
     dispatch('setCookies', authData)
     commit('setIsLoggedIn', true)
   }
+}
+
+export default {
+  state,
+  mutations,
+  getters,
+  actions
 }

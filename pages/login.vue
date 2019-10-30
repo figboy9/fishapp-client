@@ -64,7 +64,7 @@ export default {
         return
       }
       this.$store
-        .dispatch('login', {
+        .dispatch('user/login', {
           email: this.email,
           password: this.password
         })

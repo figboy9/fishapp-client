@@ -5,6 +5,24 @@ orbs:
   k8s: circleci/kubernetes@0.9.1
 
 jobs:
+  test:
+    docker:
+      - image: circleci/node:12.13.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - node-v1-{{ .Branch }}-
+            - node-v1-
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn lint
+      - run: yarn test
+
   build-push-and-rollout:
     machine: true
     steps:
@@ -40,8 +58,12 @@ jobs:
 workflows:
   build-push-and-rollout:
     jobs:
+      - test
       - build-push-and-rollout:
+          requires:
+            - test
           filters:
             branches:
               only:
                 - master
+  
