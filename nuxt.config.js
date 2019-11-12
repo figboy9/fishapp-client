@@ -44,7 +44,13 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    [
+      'nuxt-env',
+      {
+        keys: ['EXP_SEC', 'RT_EXP_SEC']
+      }
+    ]
   ],
   /*
    ** Axios module configuration
@@ -53,7 +59,7 @@ export default {
   axios: {
     browserBaseURL:
       process.env.NODE_ENV === 'production'
-        ? `http://${process.env.DOMAIN_NAME}/api/`
+        ? 'http://35.244.200.192/api/'
         : 'http://localhost:9000/api/'
   },
   /*
@@ -85,9 +91,5 @@ export default {
   },
   router: {
     middleware: 'checkCookies'
-  },
-  env: {
-    expSec: process.env.EXP_SEC,
-    rtExpSec: process.env.RT_EXP_SEC
   }
 }
