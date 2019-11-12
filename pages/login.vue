@@ -70,20 +70,17 @@ export default {
         .then(() => {
           this.$router.push('/')
         })
-        .catch((errors) => {
-          errors.forEach((error) => {
-            if (error.message.match(/record not found/)) {
-              debugger
-              this.validEmail = true
-              this.$refs.form.validate()
-              this.validEmail = false
-            }
-            if (error.message.match(/bcrypt/)) {
-              this.validPass = true
-              this.$refs.form.validate()
-              this.validPass = false
-            }
-          })
+        .catch((error) => {
+          if (error.message.match(/record not found/)) {
+            this.validEmail = true
+            this.$refs.form.validate()
+            this.validEmail = false
+          }
+          if (error.message.match(/bcrypt/)) {
+            this.validPass = true
+            this.$refs.form.validate()
+            this.validPass = false
+          }
         })
     }
   }
