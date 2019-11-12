@@ -38,7 +38,6 @@ jobs:
           image: fishapp_client_nuxt
           tag: ${CIRCLE_SHA1}
           registry-url: asia.gcr.io
-          extra_build_args: --build-arg DOMAIN_NAME=${DOMAIN_NAME} --build-arg EXP_SEC=${EXP_SEC} --build-arg RT_EXP_SEC=${RT_EXP_SEC}
       - gcr/push-image:
           image: fishapp_client_nginx
           tag: ${CIRCLE_SHA1}
@@ -53,7 +52,6 @@ jobs:
             gcloud container clusters get-credentials fishapp
             kubectl set image deployment client-deployment nuxt=asia.gcr.io/${GOOGLE_PROJECT_ID}/fishapp_client_nuxt:${CIRCLE_SHA1}
             kubectl set image deployment client-deployment nginx=asia.gcr.io/${GOOGLE_PROJECT_ID}/fishapp_client_nginx:${CIRCLE_SHA1}
-
 
 workflows:
   build-push-and-rollout:
