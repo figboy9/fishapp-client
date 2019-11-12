@@ -3,14 +3,6 @@ RUN apk update
 WORKDIR /app
 COPY . .
 RUN yarn
-# ビルド前に環境変数を注入
-ARG DOMAIN_NAME
-ENV DOMAIN_NAME $DOMAIN_NAME
-ARG EXP_SEC
-ENV EXP_SEC $EXP_SEC
-ARG RT_EXP_SEC
-ENV RT_EXP_SEC $RT_EXP_SEC
-
 RUN yarn build
 
 FROM node:12.13.0-alpine
