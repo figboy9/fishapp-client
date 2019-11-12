@@ -80,14 +80,12 @@ export default {
         .then(() => {
           this.$router.push('/')
         })
-        .catch((errors) => {
-          errors.forEach((error) => {
-            if (error.message.match(/Duplicate/)) {
-              this.emailUsed = true
-              this.$refs.form.validate()
-              this.emailUsed = false
-            }
-          })
+        .catch((error) => {
+          if (error.message.match(/Duplicate/)) {
+            this.emailUsed = true
+            this.$refs.form.validate()
+            this.emailUsed = false
+          }
         })
     },
     logout() {
