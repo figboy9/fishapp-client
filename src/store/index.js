@@ -22,6 +22,7 @@ const actions = {
       commit('setIsLoggedIn', false)
       return
     }
+
     const cookieparser = require('cookieparser')
     const parsed = cookieparser.parse(req.headers.cookie)
     if (!parsed.refreshToken) {
@@ -34,8 +35,12 @@ const actions = {
 
     $axios.setToken(parsed.refreshToken, 'Bearer')
     const authData = await $axios.$post(
-      'http://auth:9000/api/auth/refresh_id_token'
+      'http://auth:8080/api/auth/refresh_id_token'
     )
+    if (!authData.idToken) {
+      console.log(authData.data)
+      // throw authData.data
+    }
 
     const cookie = require('cookie')
     const tokenExp = new Date()
@@ -55,14 +60,13 @@ const actions = {
 
   async refreshIdToken(_, refreshToken) {
     this.$axios.setToken(refreshToken, 'Bearer')
-    const authData = await this.$axios.$post('auth/refresh_id_token')
+    const authData = await this.$axios.$post('/auth/refresh_id_token')
     return authData
   },
 
   async register({ commit, dispatch }, formData) {
-    debugger
     const authData = await this.$axios
-      .$post('auth/users', formData)
+      .$post('/auth/users', formData)
       .catch((err) => {
         return err.response
       })
@@ -93,7 +97,7 @@ const actions = {
       password: formData.password
     }
     const authData = await this.$axios
-      .$post('auth/login', user)
+      .$post('/auth/login', user)
       .catch((err) => {
         return err.response
       })

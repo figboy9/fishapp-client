@@ -1,6 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  srcDir: 'src/',
   mode: 'universal',
   /*
    ** Headers of the page
@@ -45,6 +46,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    // '@nuxtjs/proxy',
     [
       'nuxt-env',
       {
@@ -59,8 +61,9 @@ export default {
   axios: {
     browserBaseURL:
       process.env.NODE_ENV === 'production'
-        ? 'http://35.244.200.192/api/'
-        : 'http://localhost:9000/api/'
+        ? 'http://35.244.200.192/api'
+        : 'http://localhost/api',
+    proxy: true
   },
   /*
    ** vuetify module configuration
