@@ -1,0 +1,11 @@
+FROM node:12.13.0-alpine as builder
+RUN apk update
+WORKDIR /app
+ENV HOST="0.0.0.0"
+
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install
+COPY . .
+
+CMD ["yarn", "dev"]
