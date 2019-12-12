@@ -22,7 +22,6 @@ const actions = {
       commit('setIsLoggedIn', false)
       return
     }
-
     const cookieparser = require('cookieparser')
     const parsed = cookieparser.parse(req.headers.cookie)
     if (!parsed.refreshToken) {
@@ -32,16 +31,15 @@ const actions = {
       commit('setIsLoggedIn', true)
       return
     }
-
     $axios.setToken(parsed.refreshToken, 'Bearer')
     const authData = await $axios.$post(
       'http://auth:8080/api/auth/refresh_id_token'
     )
+    console.log(authData)
     if (!authData.idToken) {
       console.log(authData.data)
-      // throw authData.data
+      throw authData.data
     }
-
     const cookie = require('cookie')
     const tokenExp = new Date()
     const rtExp = new Date()
@@ -73,7 +71,6 @@ const actions = {
     if (!authData.idToken) {
       throw authData.data
     }
-
     commit('setUser', { name: formData.name, emial: formData.email })
     dispatch('setCookies', authData)
     commit('setIsLoggedIn', true)

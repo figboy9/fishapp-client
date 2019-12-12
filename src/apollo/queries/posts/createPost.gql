@@ -1,0 +1,8 @@
+# Write your query or mutation here
+mutation($title: String!, $content: String!, $user_id: ID!){
+  createPost(in: {title: $title, content: $content, user_id: $user_id}){
+    id
+    title
+    content
+  }
+}

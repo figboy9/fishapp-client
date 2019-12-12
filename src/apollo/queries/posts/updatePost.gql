@@ -1,0 +1,3 @@
+mutation($id: ID!, $title: String!, $content: String!){
+  updatePost(in: {id: $id, title: $title, content: $content})
+}
