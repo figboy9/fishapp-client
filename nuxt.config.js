@@ -45,6 +45,7 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/apollo',
     '@nuxtjs/axios',
     // '@nuxtjs/proxy',
     [
@@ -54,6 +55,15 @@ export default {
       }
     ]
   ],
+  apollo: {
+    clientConfigs: {
+      default: {
+        // Graphpack側のエンドポイントを指定します。
+        httpEndpoint: 'http://api-gateway:8080/graphql',
+        browserHttpEndpoint: 'http://localhost/graphql'
+      }
+    }
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -61,9 +71,9 @@ export default {
   axios: {
     browserBaseURL:
       process.env.NODE_ENV === 'production'
-        ? 'http://35.244.200.192/api'
-        : 'http://localhost/api',
-    proxy: true
+        ? 'http://35.244.200.192/express-api'
+        : 'http://localhost/express-api',
+    baseURL: 'http://localhost:3000/express-api'
   },
   /*
    ** vuetify module configuration

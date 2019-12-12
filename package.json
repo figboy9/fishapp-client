@@ -19,7 +19,9 @@
     "js-cookie": "^2.2.1",
     "nuxt": "^2.10.2",
     "nuxt-env": "^0.1.0",
-    "vuex-persistedstate": "^2.7.0"
+    "vuex-persistedstate": "^2.7.0",
+    "@nuxtjs/apollo": "^4.0.0-rc18",
+    "graphql-tag": "^2.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
