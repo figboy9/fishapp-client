@@ -2,7 +2,7 @@
   <v-form ref="form" v-model="valid">
     <nuxt-link to="/secret">a</nuxt-link>
     <p>{{ this.$store.getters.isLoggedIn }}</p>
-    <button @click="logout">ログアウト</button>
+    <button  @click="logout">ログアウト</button>
     <!-- <p>{{ a }}</p> -->
     <v-container class="px-10 text-center">
       <h1>新規登録</h1>
